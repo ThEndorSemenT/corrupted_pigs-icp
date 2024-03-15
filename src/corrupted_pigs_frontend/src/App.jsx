@@ -1,10 +1,10 @@
 import { useState } from 'react';
 import { corrupted_pigs_backend } from 'declarations/corrupted_pigs_backend';
 import Game from "./components/Game";
-import CreateGame from './components/CreateGame';
 import JoinGame from './components/JoinGame';
 import Navbar from './components/Navbar';
 import { Container } from '@chakra-ui/react';
+import { Tabs, TabList, TabPanels, Tab, TabPanel } from '@chakra-ui/react'
 
 function App() {
   const [roomId, setRoomId] = useState(null);
@@ -13,13 +13,22 @@ function App() {
   return (
     <div>
       <Navbar />
-      <Container>
+      <Container marginTop={20}>
         {!roomId ? (
-          <div>
-            <h1>Corrupted Pigs</h1>
-            <CreateGame />
-            <JoinGame />
-          </div>
+          <Tabs isFitted variant='enclosed'>
+            <TabList mb='1em'>
+              <Tab>Play!</Tab>
+              <Tab>Institutions</Tab>
+            </TabList>
+            <TabPanels>
+              <TabPanel>
+                <JoinGame />
+              </TabPanel>
+              <TabPanel>
+                <p>Institutions:</p>
+              </TabPanel>
+            </TabPanels>
+          </Tabs>
         ) : (
           <Game player1Cards={player1Cards} player2Cards={player2Cards} />
           )}
