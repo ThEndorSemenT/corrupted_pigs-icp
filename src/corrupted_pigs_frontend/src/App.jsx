@@ -11,28 +11,28 @@ function App() {
   const [player1Cards, setPlayer1Cards] = useState([1, 10, 3]); // Sample cards for player 1
   const [player2Cards, setPlayer2Cards] = useState([4, 5, 6]); // Sample cards for player 2
   return (
-    <div>
+    <div style={{height: "100vh", width: "100%"}}>
       <Navbar />
-      <Container marginTop={20}>
         {!roomId ? (
-          <Tabs isFitted variant='enclosed'>
-            <TabList mb='1em'>
-              <Tab>Play!</Tab>
-              <Tab>Institutions</Tab>
-            </TabList>
-            <TabPanels>
-              <TabPanel>
-                <JoinGame />
-              </TabPanel>
-              <TabPanel>
-                <p>Institutions:</p>
-              </TabPanel>
-            </TabPanels>
-          </Tabs>
+          <Container marginTop={20}>
+            <Tabs isFitted variant='enclosed'>
+              <TabList mb='1em'>
+                <Tab>Play!</Tab>
+                <Tab>Institutions</Tab>
+              </TabList>
+              <TabPanels>
+                <TabPanel>
+                  <JoinGame />
+                </TabPanel>
+                <TabPanel>
+                  <p>Institutions:</p>
+                </TabPanel>
+              </TabPanels>
+            </Tabs>
+          </Container>
         ) : (
-          <Game player1Cards={player1Cards} player2Cards={player2Cards} />
-          )}
-      </Container>
+          <Game player1Cards={player1Cards} player2Cards={player2Cards}/>
+        )}
     </div>
   );
 };
