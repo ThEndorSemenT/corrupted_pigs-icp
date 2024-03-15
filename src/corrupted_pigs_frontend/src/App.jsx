@@ -1,31 +1,29 @@
 import { useState } from 'react';
 import { corrupted_pigs_backend } from 'declarations/corrupted_pigs_backend';
+import Game from "./components/Game";
+import CreateGame from './components/CreateGame';
+import JoinGame from './components/JoinGame';
 
 function App() {
-  const [greeting, setGreeting] = useState('');
+  const [roomId, setRoomId] = useState(null);
+  const [player1Cards, setPlayer1Cards] = useState([1, 10, 3]); // Sample cards for player 1
+  const [player2Cards, setPlayer2Cards] = useState([4, 5, 6]); // Sample cards for player 2
 
-  function handleSubmit(event) {
-    event.preventDefault();
-    const name = event.target.elements.name.value;
-    corrupted_pigs_backend.greet(name).then((greeting) => {
-      setGreeting(greeting);
-    });
-    return false;
-  }
+
 
   return (
-    <main>
-      <img src="/logo2.svg" alt="DFINITY logo" />
-      <br />
-      <br />
-      <form action="#" onSubmit={handleSubmit}>
-        <label htmlFor="name">Enter your name: &nbsp;</label>
-        <input id="name" alt="Name" type="text" />
-        <button type="submit">Click Me!</button>
-      </form>
-      <section id="greeting">{greeting}</section>
-    </main>
+    <div>
+      {!roomId ? (
+        <div>
+          <h1>Corrupted Pigs</h1>
+          <CreateGame />
+          <JoinGame />
+        </div>
+      ) : (
+        <Game player1Cards={player1Cards} player2Cards={player2Cards} />
+      )}
+    </div>
   );
-}
+};
 
 export default App;
