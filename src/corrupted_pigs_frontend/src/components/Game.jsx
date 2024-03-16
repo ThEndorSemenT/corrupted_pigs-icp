@@ -20,7 +20,7 @@ const Game = ({player1Cards, player2Cards}) => {
     const [selectedCard1, setSelectedCard1] = useState(null);
     const [selectedCard2, setSelectedCard2] = useState(null);
     const [winner, setWinner] = useState(null);
-  
+
     const handleCardSelection = (card, player) => {
       if (player === 1) {
         setSelectedCard1(card);
@@ -29,7 +29,7 @@ const Game = ({player1Cards, player2Cards}) => {
         determineWinner(card);
       }
     };
-  
+
     const determineWinner = (card2) => {
       if (selectedCard1 > card2) {
         setWinner(1);
@@ -40,13 +40,13 @@ const Game = ({player1Cards, player2Cards}) => {
       }
       onOpen();
     };
-  
+
     const resetGame = () => {
       setSelectedCard1(null);
       setSelectedCard2(null);
       setWinner(null);
     };
-  
+
     return (
       <Container maxW="80%" style={{display: "flex", justifyContent: "space-between", alignItems: "center", flexDirection: "column", height: "100vh"}}>
         <Text fontSize={32} fontWeight="bold">Game Board</Text>
@@ -79,7 +79,7 @@ const Game = ({player1Cards, player2Cards}) => {
                   <p>Player {winner} wins!</p>
               )}
             </ModalBody>
-  
+
             <ModalFooter>
               <Button colorScheme='blue' mr={3} onClick={resetGame}>
                 Play Again
