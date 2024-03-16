@@ -2,11 +2,14 @@ import React, { useEffect, useState } from "react";
 import { Actor } from "@dfinity/agent";
 import { AuthClient } from "@dfinity/auth-client";
 import { corrupted_pigs_backend } from "declarations/corrupted_pigs_backend";
+import { Button } from '@chakra-ui/react';
+import { LockIcon, UnlockIcon } from "@chakra-ui/icons";
 
 const WalletConnect = () => {
 
   const [authClient, setAuthClient] = useState(null);
   const [principalId, setPrincipalId] = useState(null);
+  const [isLoading, setisLoading] = useState(false);
 
   useEffect(() => {
     async function init() {
@@ -18,14 +21,17 @@ const WalletConnect = () => {
 
   const handleSuccess = async () => {
     const identity = authClient.getIdentity();
+    console.log(identity);
     const principal = await identity.getPrincipal().toString();
     setPrincipalId(principal);
+    setisLoading(false);
 
     Actor.agentOf(corrupted_pigs_backend).replaceIdentity(identity);
   }
 
   const handleLogin = async () => {
     if (!authClient) throw new Error("AuthClient not initialized");
+    setisLoading(true);
 
     const APP_NAME = "NFID example";
     const APP_LOGO = "https://nfid.one/icons/favicon-96x96.png";
@@ -47,9 +53,13 @@ const WalletConnect = () => {
   return (
     <div>
       {!principalId ? (
-        <button onClick={handleLogin}>Login Wallet</button>
+        <Button isLoading={isLoading} onClick={handleLogin} rightIcon={<UnlockIcon />} colorScheme='blue'>
+          Login Wallet
+        </Button>
       ) : (
-        <p>Your PrincipalId: {principalId}</p>
+        <Button isLoading={isLoading} onClick={handleLogin} rightIcon={<LockIcon />} colorScheme='blue' variant='outline'>
+          Logout
+        </Button>
       )}
     </div>
   );

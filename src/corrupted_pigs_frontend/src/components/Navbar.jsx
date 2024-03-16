@@ -6,14 +6,8 @@ import { HamburgerIcon } from '@chakra-ui/icons';
 const Navbar = () => {
   const [isOpen, setIsOpen] = React.useState(false);
 
-
   const toggleDrawer = () => {
     setIsOpen(!isOpen);
-  };
-
-  const handleLoginSuccess = (identity) => {
-    console.log('Logged in!', identity);
-    // Redirect to a different page or update your app state
   };
 
   return (
@@ -29,13 +23,16 @@ const Navbar = () => {
 
       {/* Navigation Links (Visible on Large Screens) */}
       <Flex display={{ base: 'none', md: 'flex' }} alignItems="start">
-        <HStack spacing={4} style={{paddingLeft: "20px"}}>
+        <HStack spacing={4} style={{padding: "20px"}}>
           {/* Add your navigation links here */}
           <a href="/">Corrupted Pigs</a>
           <a style={{fontSize: "0.6em"}} href="https://docs.google.com/document/d/1wGX5geCcxdMx3N30Nfax9tT9HyjhmE62cJdymyF9xAk/edit?usp=sharing">White Paper</a>
           {/* ... */}
-          <WalletConnect />
         </HStack>
+
+        <div style={{ marginLeft: "auto", marginRight: "20px", padding: "20px" }}>
+          <WalletConnect />
+        </div>
       </Flex>
 
       {/* Drawer (Hidden on Large Screens) */}
@@ -50,6 +47,10 @@ const Navbar = () => {
                 <a href="/">Home</a>
                 <a href="https://docs.google.com/document/d/1wGX5geCcxdMx3N30Nfax9tT9HyjhmE62cJdymyF9xAk/edit?usp=sharing">White Paper</a>
               </VStack>
+
+              <div style={{ marginLeft: "auto", marginRight: "20px", padding: "20px" }}>
+                <WalletConnect />
+              </div>
             </DrawerBody>
           </DrawerContent>
         </DrawerOverlay>
