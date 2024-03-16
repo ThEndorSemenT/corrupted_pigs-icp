@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import Cookies from "js-cookie";
 import { Actor } from "@dfinity/agent";
 import { AuthClient } from "@dfinity/auth-client";
 import { corrupted_pigs_backend } from "declarations/corrupted_pigs_backend";
@@ -12,19 +13,31 @@ const WalletConnect = () => {
   const [isLoading, setisLoading] = useState(false);
 
   useEffect(() => {
-    async function init() {
+    async function checkUserLoggedIn() {
+      const userSession = Cookies.get("userSession");
+      if (userSession) {
+        // Set the user session data (e.g., authentication token) in your app
+        // You can use this information to keep the user logged in
+        setPrincipalId(userSession);
+      }
+    }
+
+    async function setWalletAuthClient() {
       const client = await AuthClient.create();
       setAuthClient(client);
     }
-    init();
+
+    setWalletAuthClient();
+    checkUserLoggedIn();
   }, []);
 
   const handleSuccess = async () => {
     const identity = authClient.getIdentity();
-    console.log(identity);
     const principal = await identity.getPrincipal().toString();
     setPrincipalId(principal);
     setisLoading(false);
+
+    Cookies.set("userSession", principal, { expires: 3600 });
 
     Actor.agentOf(corrupted_pigs_backend).replaceIdentity(identity);
   }
@@ -50,6 +63,11 @@ const WalletConnect = () => {
     });
   };
 
+  const handleLogout = () => {
+    setPrincipalId(null);
+    Cookies.remove("userSession");
+  };
+
   return (
     <div>
       {!principalId ? (
@@ -57,7 +75,7 @@ const WalletConnect = () => {
           Login Wallet
         </Button>
       ) : (
-        <Button isLoading={isLoading} onClick={handleLogin} rightIcon={<LockIcon />} colorScheme='blue' variant='outline'>
+        <Button isLoading={isLoading} onClick={handleLogout} rightIcon={<LockIcon />} colorScheme='blue' variant='outline'>
           Logout
         </Button>
       )}
