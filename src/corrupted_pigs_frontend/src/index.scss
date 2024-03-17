@@ -3,11 +3,13 @@ body {
   font-size: 1.5rem;
 }
 
-img {
-  max-width: 50vw;
-  max-height: 25vw;
-  display: block;
-  margin: auto;
+#gameboard {
+  img {
+    max-width: 50vw;
+    max-height: 20vw;
+    display: block;
+    margin: auto;
+  }
 }
 
 form {

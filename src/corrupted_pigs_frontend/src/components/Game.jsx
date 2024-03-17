@@ -11,13 +11,13 @@ import {
   ModalCloseButton,
   ModalBody,
   ModalFooter,
-  Button,
+  Button
 } from "@chakra-ui/react"
 import Card from './Card';
 import { corrupted_pigs_backend } from '../../../declarations/corrupted_pigs_backend';
 
 const Game = ({
-  player1Cards, 
+  player1Cards,
   player2Cards,
   principalId
 }) => {
@@ -35,7 +35,7 @@ const Game = ({
       }
 
       console.log(player);
-      
+
     }, [player]);
 
     const handleCardSelection = (card, player) => {
@@ -65,7 +65,7 @@ const Game = ({
     };
 
     return (
-      <Container maxW="80%" style={{display: "flex", justifyContent: "space-between", alignItems: "center", flexDirection: "column", height: "100%"}}>
+      <Container id="gameboard" maxW="80%" style={{display: "flex", justifyContent: "space-between", alignItems: "center", flexDirection: "column", height: "100%"}}>
         <Text fontSize={32} fontWeight="bold">Game Board</Text>
         {player === null ? (
           <p>Loading playerId...</p>
@@ -82,7 +82,8 @@ const Game = ({
             ))}
           </SimpleGrid>
         </div>
-        <div>
+
+        <div style={{marginTop: "20px"}}>
           <SimpleGrid spacing={4} style={{display: "flex", flexDirection: "row"}}>
             {player2Cards.map((card, index) => (
               <Card key={index} value={card} onClick={() => handleCardSelection(card, 2)} isSelected={selectedCard2 === card} />
@@ -90,6 +91,7 @@ const Game = ({
           </SimpleGrid>
           <h3>Player 2</h3>
         </div>
+
         {winner && (
           <Modal closeOnOverlayClick={false} isOpen={isOpen} onClose={onClose}>
           <ModalOverlay />
