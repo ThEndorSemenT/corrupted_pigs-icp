@@ -11,6 +11,7 @@ import Principal "mo:base/Principal";
 import Iter "mo:base/Iter";
 import Text "mo:base/Text";
 import Result "mo:base/Result";
+import Debug "mo:base/Debug";
 import Map "mo:map/Map";
 import { nhash; thash } "mo:map/Map";
 import Vector "mo:vector/Class";
@@ -24,6 +25,7 @@ shared actor class GameBackend() = Self {
   type Player = {
       id : Text;
       cards : [Card];
+      currentMatchId: ?Nat;
   };
 
   // Define a type for the game state
@@ -31,6 +33,8 @@ shared actor class GameBackend() = Self {
     id: Nat;
     player1 : Player;
     player2 : Player;
+    card1: ?Nat;
+    card2: ?Nat;
     winner : ?Player;
   };
 
@@ -46,6 +50,7 @@ shared actor class GameBackend() = Self {
   let queue = Vector.Vector<Player>();
 
   func _checkInGame(playerId : Text) : Bool {
+    Debug.print(debug_show players_in_matches);
     switch(Map.get(players_in_matches, thash, playerId)){
       case(?inMatch){
         return true;
@@ -54,6 +59,74 @@ shared actor class GameBackend() = Self {
         return false;
       };
     }
+  };
+
+  public func checkWinner(matchId: Nat) : async Text {
+    switch(Map.get(matches, nhash, matchId)){
+      case(?match){
+        switch(match.card1){
+          case(?card1){
+            switch(match.card2){
+              case(?card2){
+                if(card1 > card2) {
+                  return match.player1.id;
+                };
+                if(card2 > card1) {
+                  return match.player2.id;
+                };
+                return "Tie";
+              };
+              case(null){
+                return "Error";
+              };
+            };
+          };
+          case(null){
+            return "Error";
+          };
+        };
+      };
+      case(null){
+        return "Error";
+      };
+    };
+  };
+
+  public func makePlay(playerId: Text, matchId: Nat, play: Nat) : async Result.Result<Text, Text> {
+    switch(Map.get(matches, nhash, matchId)){
+      case(?match){
+        if(playerId == match.player1.id) {
+          let newMatch : Match = {
+            match with card1 = ?play;
+          };
+          Map.set(matches, nhash, matchId, newMatch);
+          return #ok("Play successfull");
+        };
+        if(playerId == match.player2.id) {
+          let newMatch : Match = {
+            match with card2 = ?play;
+          };
+          Map.set(matches, nhash, matchId, newMatch);
+          return #ok("Play successfull");
+        };
+        return #err("Player is not in the match provided");
+      };
+      case(null) {
+        return #err("Match not found");
+      };
+    };
+  };
+
+  public func checkGameStart(playerId : Text) : async Result.Result<Match, Text> {
+    if(_checkInGame(playerId) == false){
+      return #err("You are not in a match");
+    };
+    for(match in Map.vals(matches)) {
+      if(match.player1.id == playerId or match.player2.id == playerId) {
+        return #ok(match);
+      };
+    };
+    return #err("Didn't find your match");
   };
 
   // Function to match players
@@ -74,6 +147,7 @@ shared actor class GameBackend() = Self {
     let newPlayer : Player = {
       id = playerId;
       cards;
+      currentMatchId = null;
     };
 
     queue.add(newPlayer);
@@ -92,6 +166,8 @@ shared actor class GameBackend() = Self {
         id = nextMatchId;
         player1;
         player2;
+        card1 = null;
+        card2 = null;
         winner = null;
       };
 
@@ -107,6 +183,8 @@ shared actor class GameBackend() = Self {
 
   public func cleanQueue() : async Text {
     queue.clear();
+    Map.clear(matches);
+    Map.clear(players_in_matches);
     nextMatchId := 0;
     return "Cleared Queue";
   };

@@ -20,7 +20,7 @@ dfx deploy --argument "(
     symbol = \"CTP\";
     maxLimit = 10;
   }
-)" corrupted_pigs_nft
+)" --ic corrupted_pigs_nft
 
 dfx deploy corrupted_pigs_frontend
 

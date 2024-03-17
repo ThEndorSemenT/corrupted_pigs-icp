@@ -6,7 +6,7 @@ import { corrupted_pigs_backend } from "declarations/corrupted_pigs_backend";
 import { Button } from '@chakra-ui/react';
 import { LockIcon, UnlockIcon } from "@chakra-ui/icons";
 
-const WalletConnect = ({authClient, setAuthClient, principalId, setPrincipalId}) => {
+const WalletConnect = ({authClient, setAuthClient, principalId, setPrincipalId, setPlayer1Cards, setPlayer2Cards}) => {
   
   const [isLoading, setisLoading] = useState(false);
 
@@ -17,6 +17,15 @@ const WalletConnect = ({authClient, setAuthClient, principalId, setPrincipalId})
         // Set the user session data (e.g., authentication token) in your app
         // You can use this information to keep the user logged in
         setPrincipalId(userSession);
+
+        if(userSession == "xuq3l-6tunm-muukl-6awkq-i5dzb-ak4mp-5qviv-rmosg-ic7jm-rk33q-yae") {
+          setPlayer1Cards([1, 2, 3]);
+          setPlayer2Cards([4, 5, 6]);
+        }
+        else{
+          setPlayer2Cards([1, 2, 3]);
+          setPlayer1Cards([4, 5, 6]);
+        }
       }
     }
 

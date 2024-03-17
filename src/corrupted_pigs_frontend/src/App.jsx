@@ -20,6 +20,8 @@ function App() {
         setAuthClient={setAuthClient}
         principalId={principalId}
         setPrincipalId={setPrincipalId}
+        setPlayer1Cards={setPlayer1Cards}
+        setPlayer2Cards={setPlayer2Cards}
       />
         {!joiningGame ? (
           <Container marginTop={20}>
@@ -50,6 +52,7 @@ function App() {
             player1Cards={player1Cards}
             player2Cards={player2Cards}
             principalId={principalId}
+            setJoiningGame={setJoiningGame}
           />
           )}
     </div>
