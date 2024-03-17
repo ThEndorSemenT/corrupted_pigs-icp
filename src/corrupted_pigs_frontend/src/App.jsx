@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import Game from "./components/Game";
 import JoinGame from './components/JoinGame';
 import Navbar from './components/Navbar';
+import MarketPlace from './components/MarketPlace';
 import { Container } from '@chakra-ui/react';
 import { Tabs, TabList, TabPanels, Tab, TabPanel } from '@chakra-ui/react'
 
@@ -24,18 +25,19 @@ function App() {
           <Container marginTop={20}>
             <Tabs isFitted variant='enclosed'>
               <TabList mb='1em'>
-                <Tab>Play!</Tab>
                 <Tab>Marketplace</Tab>
+                <Tab>Play!</Tab>
                 <Tab>Institutions</Tab>
               </TabList>
               <TabPanels>
                 <TabPanel>
-                  <JoinGame setJoiningGame={setJoiningGame} principalId={principalId}/>
+                  <MarketPlace />
                 </TabPanel>
 
                 <TabPanel>
-                  <h3>Acquire your NFTs</h3>
+                  <JoinGame setJoiningGame={setJoiningGame} principalId={principalId}/>
                 </TabPanel>
+
 
                 <TabPanel>
                   <h3>Institutions:</h3>

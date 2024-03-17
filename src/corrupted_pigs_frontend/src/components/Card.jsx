@@ -42,7 +42,6 @@ const Card = ({ pig_id, onClick, isSelected }) => {
           {pig_id}
         </Badge>
       </CardBody>
-      <Divider />
     </PigCard>
     );
   }
