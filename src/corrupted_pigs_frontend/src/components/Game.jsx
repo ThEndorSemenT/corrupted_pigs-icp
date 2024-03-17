@@ -26,6 +26,30 @@ const Game = ({
     const [selectedCard2, setSelectedCard2] = useState(null);
     const [winner, setWinner] = useState(null);
     const [player, setPlayer] = useState(null);
+    const [text, setText] = useState("");
+
+    useEffect(() => {
+
+      const clearQueue = async () => {
+        if(text == "") {
+          let text1 = await corrupted_pigs_backend.cleanQueue();
+          setText(text1);
+        }
+        console.log(text);
+      }
+
+      const joinGame = async () => {
+        if(!player) {
+          let player1 = await corrupted_pigs_backend.joinGame(principalId, [10, 11, 12]);
+          setPlayer(player1);
+        }
+        console.log(player);
+      }
+
+
+      //clearQueue();
+      joinGame();
+    }, [player, text]);
 
     const handleCardSelection = (card, player) => {
       if (player === 1) {
@@ -56,11 +80,11 @@ const Game = ({
     return (
       <Container id="gameboard" maxW="80%" style={{display: "flex", justifyContent: "space-between", alignItems: "center", flexDirection: "column", height: "100%"}}>
         <Text fontSize={32} fontWeight="bold">Game Board</Text>
-        {player === null ? (
+        {(player === undefined) ? (
           <p>Loading playerId...</p>
           ) : (
           <>
-            <p>{"PlayerId:" + player}</p>
+            <p>{"MatchId:" + player}</p>
           </>
         )}
         <div>
