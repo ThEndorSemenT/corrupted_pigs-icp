@@ -15,7 +15,6 @@ import {
 } from "@chakra-ui/react"
 import Card from './Card';
 import { corrupted_pigs_backend } from '../../../declarations/corrupted_pigs_backend';
-import axios from 'axios';
 
 const Game = ({
   player1Cards,
@@ -27,18 +26,6 @@ const Game = ({
     const [selectedCard2, setSelectedCard2] = useState(null);
     const [winner, setWinner] = useState(null);
     const [player, setPlayer] = useState(null);
-
-    useEffect(() => {
-
-      // Make the HTTP request using Axios
-      axios.get(`http://127.0.0.1:4943/?canisterId=asrmz-lmaaa-aaaaa-qaaeq-cai&index=${0}`)
-      .then(response => {
-        console.log(response.data);
-      })
-      .catch(error => {
-        console.error('Error fetching data:', error);
-      });
-    }, []);
 
     const handleCardSelection = (card, player) => {
       if (player === 1) {
@@ -79,16 +66,16 @@ const Game = ({
         <div>
           <h3>Player 1</h3>
           <SimpleGrid spacing={4} style={{display: "flex", flexDirection: "row"}}>
-            {player1Cards.map((card, index) => (
-              <Card key={index} value={card} onClick={() => handleCardSelection(card, 1)} isSelected={selectedCard1 === card} />
+            {player1Cards.map((pig_id, index) => (
+              <Card key={index} pig_id={pig_id} onClick={() => handleCardSelection(pig_id, 1)} isSelected={selectedCard1 === pig_id} />
             ))}
           </SimpleGrid>
         </div>
 
         <div style={{marginTop: "20px"}}>
           <SimpleGrid spacing={4} style={{display: "flex", flexDirection: "row"}}>
-            {player2Cards.map((card, index) => (
-              <Card key={index} value={card} onClick={() => handleCardSelection(card, 2)} isSelected={selectedCard2 === card} />
+            {player2Cards.map((pig_id, index) => (
+              <Card key={index} pig_id={pig_id} onClick={() => handleCardSelection(pig_id, 2)} isSelected={selectedCard2 === pig_id} />
             ))}
           </SimpleGrid>
           <h3>Player 2</h3>

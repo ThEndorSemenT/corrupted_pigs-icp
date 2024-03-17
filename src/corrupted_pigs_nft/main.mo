@@ -172,18 +172,41 @@ shared actor class Dip721NFT(custodian: Principal, init : Types.Dip721NonFungibl
     });
   };
 
-  public query func http_request(request : Types.HttpRequest) : async Types.HttpResponse {
-    
-    let ctype = "image/png";
-    //let path = Iter.toArray(Text.tokens(request.url, #text("/")));
-    let base64Image = Pigs.getNFT(1); // Assuming Pigs.getNFT(0) returns image data
+  private func _getParam(url : Text, param : Text) : ?Text {
+    var _s : Text = url;
+    Iter.iterate<Text>(
+      Text.split(_s, #text("/")),
+      func(x, _i) {
+        _s := x;
+      },
+    );
+    Iter.iterate<Text>(
+      Text.split(_s, #text("?")),
+      func(x, _i) {
+        if (_i == 1) _s := x;
+      },
+    );
+    var t : ?Text = null;
+    var found : Bool = false;
+    Iter.iterate<Text>(
+      Text.split(_s, #text("&")),
+      func(x, _i) {
+        if (found == false) {
+          Iter.iterate<Text>(
+            Text.split(x, #text("=")),
+            func(y, _ii) {
+              if (_ii == 0) {
+                if (Text.equal(y, param)) found := true;
+              } else if (found == true) t := ?y;
+            },
+          );
+        };
+      },
+    );
+    return t;
+  };
 
-    return {
-      status_code = 200;
-      headers = [("content-type", ctype),("cache-control", "public, max-age=15552000")];
-      body = Text.encodeUtf8(base64Image);
-      streaming_strategy = null;
-    };
-
+  public query func getImageData(image_id : Nat) : async Text {
+    return "data:image/png;base64," # Pigs.getNFT(image_id);
   };
 }

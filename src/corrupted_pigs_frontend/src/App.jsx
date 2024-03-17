@@ -9,7 +9,7 @@ function App() {
   const [authClient, setAuthClient] = useState(null);
   const [principalId, setPrincipalId] = useState(null);
   const [joiningGame, setJoiningGame] = useState(false);
-  const [player1Cards, setPlayer1Cards] = useState([1, 10, 3]); // Sample cards for player 1
+  const [player1Cards, setPlayer1Cards] = useState([1, 2, 3]); // Sample cards for player 1
   const [player2Cards, setPlayer2Cards] = useState([4, 5, 6]); // Sample cards for player 2
 
   return (
@@ -44,7 +44,7 @@ function App() {
             </Tabs>
           </Container>
         ) : (
-          <Game 
+          <Game
             player1Cards={player1Cards}
             player2Cards={player2Cards}
             principalId={principalId}

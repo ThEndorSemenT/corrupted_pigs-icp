@@ -1,4 +1,4 @@
-import React from 'react'
+import { React, useEffect, useState } from 'react'
 import {
   Card as PigCard,
   CardBody,
@@ -6,8 +6,22 @@ import {
   Divider,
   Image,
 } from '@chakra-ui/react'
+import { corrupted_pigs_nft } from "../../../declarations/corrupted_pigs_nft";
+import axios from 'axios';
 
-const Card = ({ value, onClick, isSelected }) => {
+const Card = ({ pig_id, onClick, isSelected }) => {
+  const [nftPng, setNftPng] = useState(null);
+
+  useEffect(() => {
+    const getImageData = async () => {
+      let image = await corrupted_pigs_nft.getImageData(pig_id);
+      setNftPng(image);
+    }
+
+    getImageData();
+
+  }, [])
+
   return (
     <PigCard
       size="sm"
@@ -20,13 +34,12 @@ const Card = ({ value, onClick, isSelected }) => {
     >
       <CardBody>
         <Image
-          src='../public/pig1.jpeg'
-          alt='Green double couch with wooden legs'
+          src={nftPng}
           borderRadius='lg'
           objectFit="contain"
         />
         <Badge colorScheme='green' fontSize='0.7em' position='absolute' bottom='30px' right='30px'>
-          {value}
+          {pig_id}
         </Badge>
       </CardBody>
       <Divider />
