@@ -19,25 +19,24 @@ import { corrupted_pigs_backend } from '../../../declarations/corrupted_pigs_bac
 const Game = ({
   player1Cards, 
   player2Cards,
+  principalId
 }) => {
     const { isOpen, onOpen, onClose } = useDisclosure();
-    const [playerId, setPlayerId] = useState(null);
     const [selectedCard1, setSelectedCard1] = useState(null);
     const [selectedCard2, setSelectedCard2] = useState(null);
     const [winner, setWinner] = useState(null);
+    const [player, setPlayer] = useState(null);
 
     useEffect(() => {
 
-      const getPlayer = async () => {
-        if(!playerId) {
-          let player = await corrupted_pigs_backend.getPlayerId();
-          setPlayerId(player);
-        }
-        console.log(playerId);
+      const joinGame = async () => {
+        const player1 = await corrupted_pigs_backend.joinGame(principalId.toString(), [10, 11, 12]);
+        setPlayer(player1);
       }
 
-      getPlayer();
-    }, [playerId]);
+      console.log(player);
+      
+    }, [player]);
 
     const handleCardSelection = (card, player) => {
       if (player === 1) {
@@ -68,13 +67,13 @@ const Game = ({
     return (
       <Container maxW="80%" style={{display: "flex", justifyContent: "space-between", alignItems: "center", flexDirection: "column", height: "100%"}}>
         <Text fontSize={32} fontWeight="bold">Game Board</Text>
-        {playerId === null ? (
-      <p>Loading playerId...</p>
-    ) : (
-      <>
-        <p>{"PlayerId:" + playerId}</p>
-      </>
-    )}
+        {player === null ? (
+          <p>Loading playerId...</p>
+          ) : (
+          <>
+            <p>{"PlayerId:" + player}</p>
+          </>
+        )}
         <div>
           <h3>Player 1</h3>
           <SimpleGrid spacing={4} style={{display: "flex", flexDirection: "row"}}>

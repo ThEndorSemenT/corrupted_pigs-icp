@@ -29,7 +29,7 @@ function App() {
               </TabList>
               <TabPanels>
                 <TabPanel>
-                  <JoinGame setJoiningGame={setJoiningGame}/>
+                  <JoinGame setJoiningGame={setJoiningGame} principalId={principalId}/>
                 </TabPanel>
                 <TabPanel>
                   <p>Institutions:</p>
@@ -39,8 +39,9 @@ function App() {
           </Container>
         ) : (
           <Game 
-          player1Cards={player1Cards} 
-          player2Cards={player2Cards}
+            player1Cards={player1Cards}
+            player2Cards={player2Cards}
+            principalId={principalId}
           />
           )}
     </div>

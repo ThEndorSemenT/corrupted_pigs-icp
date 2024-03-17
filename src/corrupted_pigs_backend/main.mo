@@ -189,42 +189,42 @@ shared actor class Dip721NFT(custodian: Principal, init : Types.Dip721NonFungibl
   };
 
   // Define a type for cards
-    type Card = Nat;
+  type Card = Nat;
 
-    // Define a type for players
-    type Player = {
-        id : Text;
-        cards : [Card];
-    };
+  // Define a type for players
+  type Player = {
+      id : ?Principal;
+      cards : [Card];
+  };
 
-    var playerId = 0;
+  var playerId = 0;
 
-    public func getPlayerId() : async Nat{
-      return playerId;
-    };
+  public func getPlayerId() : async Nat{
+    return playerId;
+  };
 
-    // Define a type for the game state
-    type GameState = {
-        player1 : Player;
-        player2 : Player;
-        winner : Text;
-    };
+  // Define a type for the game state
+  type GameState = {
+    player1 : Player;
+    player2 : Player;
+    winner : Text;
+  };
 
-    // Define an initial game state
-    let initialGameState : GameState = {
-        player1 = { id = ""; cards = [] };
-        player2 = { id = ""; cards = [] };
-        winner = "";
-    };
+  // Define an initial game state
+  let initialGameState : GameState = {
+    player1 = { id = null; cards = [] };
+    player2 = { id = null; cards = [] };
+    winner = "";
+  };
 
-    // Function to match players
-    public func joinGame(playerId : Text, _cards: [Card]) : async Player {
-        if (initialGameState.player1.id == "") {
-        return { id = playerId; cards = _cards };
-        } else if (initialGameState.player2.id == "") {
-        return { id = playerId; cards = _cards };
-        } else {
-        { id = ""; cards = [] };
-        }
-    };
+  // Function to match players
+  public func joinGame(playerId : ?Principal, _cards: [Card]) : async Player {
+    if (initialGameState.player1.id == null) {
+    return { id = playerId; cards = _cards };
+    } else if (initialGameState.player2.id == null) {
+    return { id = playerId; cards = _cards };
+    } else {
+    { id = null; cards = [] };
+    }
+  };
 }
