@@ -4,9 +4,14 @@
       "main": "src/corrupted_pigs_backend/main.mo",
       "type": "motoko"
     },
+    "corrupted_pigs_nft": {
+      "main": "src/corrupted_pigs_nft/main.mo",
+      "type": "motoko"
+    },
     "corrupted_pigs_frontend": {
       "dependencies": [
-        "corrupted_pigs_backend"
+        "corrupted_pigs_backend",
+        "corrupted_pigs_nft"
       ],
       "source": [
         "src/corrupted_pigs_frontend/dist"
@@ -29,7 +34,7 @@
   "defaults": {
     "build": {
       "args": "",
-      "packtool": ""
+      "packtool": "mops sources"
     }
   },
   "output_env_file": ".env",

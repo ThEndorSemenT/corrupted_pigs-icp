@@ -30,7 +30,7 @@ const Game = ({
     useEffect(() => {
 
       const joinGame = async () => {
-        const player1 = await corrupted_pigs_backend.joinGame(principalId.toString(), [10, 11, 12]);
+        const player1 = await corrupted_pigs_backend.joinGame(principalId, [10, 11, 12]);
         setPlayer(player1);
       }
 
