@@ -6,10 +6,8 @@ import { corrupted_pigs_backend } from "declarations/corrupted_pigs_backend";
 import { Button } from '@chakra-ui/react';
 import { LockIcon, UnlockIcon } from "@chakra-ui/icons";
 
-const WalletConnect = () => {
-
-  const [authClient, setAuthClient] = useState(null);
-  const [principalId, setPrincipalId] = useState(null);
+const WalletConnect = ({authClient, setAuthClient, principalId, setPrincipalId}) => {
+  
   const [isLoading, setisLoading] = useState(false);
 
   useEffect(() => {

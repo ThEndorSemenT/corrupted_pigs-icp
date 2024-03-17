@@ -3,7 +3,7 @@ import { IconButton, Drawer, DrawerOverlay, DrawerContent, DrawerCloseButton, Dr
 import WalletConnect from './WalletConnect';
 import { HamburgerIcon } from '@chakra-ui/icons';
 
-const Navbar = () => {
+const Navbar = ({authClient, setAuthClient, principalId, setPrincipalId}) => {
   const [isOpen, setIsOpen] = React.useState(false);
 
   const toggleDrawer = () => {
@@ -31,7 +31,12 @@ const Navbar = () => {
         </HStack>
 
         <div style={{ marginLeft: "auto", marginRight: "20px", padding: "20px" }}>
-          <WalletConnect />
+          <WalletConnect 
+            authClient={authClient}
+            setAuthClient={setAuthClient}
+            principalId={principalId}
+            setPrincipalId={setPrincipalId}
+          />
         </div>
       </Flex>
 

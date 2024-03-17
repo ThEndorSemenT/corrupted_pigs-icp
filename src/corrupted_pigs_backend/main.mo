@@ -8,7 +8,10 @@ import Array "mo:base/Array";
 import Option "mo:base/Option";
 import Bool "mo:base/Bool";
 import Principal "mo:base/Principal";
+import Iter "mo:base/Iter";
+import Text "mo:base/Text";
 import Types "./Types";
+import Pigs "./pigs_nfts";
 
 shared actor class Dip721NFT(custodian: Principal, init : Types.Dip721NonFungibleToken) = Self {
   stable var transactionId: Types.TransactionId = 0;
@@ -168,4 +171,60 @@ shared actor class Dip721NFT(custodian: Principal, init : Types.Dip721NonFungibl
       id = transactionId;
     });
   };
+
+  public query func http_request(request : Types.HttpRequest) : async Types.HttpResponse {
+    // let width : Text = "500";
+    // let height : Text = "500";
+    let ctype = "text/html";
+    // let ctype2 = "text/svg";
+    let path = Iter.toArray(Text.tokens(request.url, #text("/")));
+
+    return {
+      status_code = 200;
+      headers = [("content-type", ctype),("cache-control", "public, max-age=15552000")];
+      body = Text.encodeUtf8("<img src=\"data:image/png;base64 ," # Pigs.getNFTindex() # "\" alt=\"Red dot\" />");
+      streaming_strategy = null;
+    };
+
+  };
+
+  // Define a type for cards
+    type Card = Nat;
+
+    // Define a type for players
+    type Player = {
+        id : Text;
+        cards : [Card];
+    };
+
+    var playerId = 0;
+
+    public func getPlayerId() : async Nat{
+      return playerId;
+    };
+
+    // Define a type for the game state
+    type GameState = {
+        player1 : Player;
+        player2 : Player;
+        winner : Text;
+    };
+
+    // Define an initial game state
+    let initialGameState : GameState = {
+        player1 = { id = ""; cards = [] };
+        player2 = { id = ""; cards = [] };
+        winner = "";
+    };
+
+    // Function to match players
+    public func joinGame(playerId : Text, _cards: [Card]) : async Player {
+        if (initialGameState.player1.id == "") {
+        return { id = playerId; cards = _cards };
+        } else if (initialGameState.player2.id == "") {
+        return { id = playerId; cards = _cards };
+        } else {
+        { id = ""; cards = [] };
+        }
+    };
 }

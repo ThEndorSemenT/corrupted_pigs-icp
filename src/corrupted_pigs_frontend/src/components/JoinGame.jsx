@@ -1,10 +1,10 @@
 import React from 'react'
 import { Button, ButtonGroup } from '@chakra-ui/react'
 
-const JoinGame = () => {
+const JoinGame = ({setJoiningGame}) => {
   return (
     <ButtonGroup gap={4}>
-      <Button colorScheme='gray' size='md'>
+      <Button colorScheme='gray' size='md' onClick={() => setJoiningGame(true)}>
         Join 'Strongest'
       </Button>
       <Button colorScheme='gray' size='md'>

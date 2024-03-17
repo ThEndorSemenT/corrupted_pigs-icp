@@ -1,7 +1,25 @@
-import Hash "mo:base/Hash";
-import HashMap "mo:base/HashMap";
+import List "mo:base/List";
+import Text "mo:base/Text";
+import Buffer "mo:base/Buffer";
+import Array "mo:base/Array";
+import Time "mo:base/Time";
 
 module {
+
+  public func getNFTindex(): Text {
+    let currentTime = Time.now();
+    //Apr 1st
+    let easterMonNanoSec = 1_711_990_510_000_000_000;
+                    
+    switch(currentTime < easterMonNanoSec) {
+        case(true) {
+            return elements[0];
+        };
+        case(false) {
+            return elements[1];
+        };
+    }
+  };
 
   public let elements : [Text] = [
     //

@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import {
   Container,
   SimpleGrid,
@@ -14,12 +14,30 @@ import {
   Button,
 } from "@chakra-ui/react"
 import Card from './Card';
+import { corrupted_pigs_backend } from '../../../declarations/corrupted_pigs_backend';
 
-const Game = ({player1Cards, player2Cards}) => {
+const Game = ({
+  player1Cards, 
+  player2Cards,
+}) => {
     const { isOpen, onOpen, onClose } = useDisclosure();
+    const [playerId, setPlayerId] = useState(null);
     const [selectedCard1, setSelectedCard1] = useState(null);
     const [selectedCard2, setSelectedCard2] = useState(null);
     const [winner, setWinner] = useState(null);
+
+    useEffect(() => {
+
+      const getPlayer = async () => {
+        if(!playerId) {
+          let player = await corrupted_pigs_backend.getPlayerId();
+          setPlayerId(player);
+        }
+        console.log(playerId);
+      }
+
+      getPlayer();
+    }, [playerId]);
 
     const handleCardSelection = (card, player) => {
       if (player === 1) {
@@ -48,8 +66,15 @@ const Game = ({player1Cards, player2Cards}) => {
     };
 
     return (
-      <Container maxW="80%" style={{display: "flex", justifyContent: "space-between", alignItems: "center", flexDirection: "column", height: "100vh"}}>
+      <Container maxW="80%" style={{display: "flex", justifyContent: "space-between", alignItems: "center", flexDirection: "column", height: "100%"}}>
         <Text fontSize={32} fontWeight="bold">Game Board</Text>
+        {playerId === null ? (
+      <p>Loading playerId...</p>
+    ) : (
+      <>
+        <p>{"PlayerId:" + playerId}</p>
+      </>
+    )}
         <div>
           <h3>Player 1</h3>
           <SimpleGrid spacing={4} style={{display: "flex", flexDirection: "row"}}>
