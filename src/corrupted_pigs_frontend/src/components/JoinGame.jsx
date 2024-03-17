@@ -1,10 +1,11 @@
 import React from 'react'
 import { Button, ButtonGroup } from '@chakra-ui/react'
+import {VStack } from '@chakra-ui/react';
 
 const JoinGame = ({setJoiningGame, principalId}) => {
 
   return (
-    <ButtonGroup gap={4}>
+    <VStack gap={10}>
       <Button colorScheme='gray' size='md' onClick={() => principalId && setJoiningGame(true)}>
         Join 'Strongest'
       </Button>
@@ -14,7 +15,7 @@ const JoinGame = ({setJoiningGame, principalId}) => {
       <Button colorScheme='gray' size='md'>
         Join 'Multiplayer'
       </Button>
-    </ButtonGroup>
+    </VStack>
   )
 }
 

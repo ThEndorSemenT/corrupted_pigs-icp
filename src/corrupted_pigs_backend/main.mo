@@ -45,7 +45,7 @@ shared actor class Dip721NFT(custodian: Principal, init : Types.Dip721NonFungibl
     };
   };
 
-  public shared({ caller }) func safeTransferFromDip721(from: Principal, to: Principal, token_id: Types.TokenId) : async Types.TxReceipt {  
+  public shared({ caller }) func safeTransferFromDip721(from: Principal, to: Principal, token_id: Types.TokenId) : async Types.TxReceipt {
     if (to == null_address) {
       return #Err(#ZeroAddress);
     } else {
@@ -85,7 +85,7 @@ shared actor class Dip721NFT(custodian: Principal, init : Types.Dip721NonFungibl
             };
           });
           transactionId += 1;
-          return #Ok(transactionId);   
+          return #Ok(transactionId);
         };
       };
     };

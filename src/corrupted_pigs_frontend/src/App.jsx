@@ -25,14 +25,20 @@ function App() {
             <Tabs isFitted variant='enclosed'>
               <TabList mb='1em'>
                 <Tab>Play!</Tab>
+                <Tab>Marketplace</Tab>
                 <Tab>Institutions</Tab>
               </TabList>
               <TabPanels>
                 <TabPanel>
                   <JoinGame setJoiningGame={setJoiningGame} principalId={principalId}/>
                 </TabPanel>
+
                 <TabPanel>
-                  <p>Institutions:</p>
+                  <h3>Acquire your NFTs</h3>
+                </TabPanel>
+
+                <TabPanel>
+                  <h3>Institutions:</h3>
                 </TabPanel>
               </TabPanels>
             </Tabs>
