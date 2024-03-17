@@ -115,11 +115,11 @@ module {
   };
 
     public type HttpRequest = {
-    method : Text;
-    url : Text;
-    headers : [HeaderField];
-    body : Blob;
-  };
+      method : Text;
+      url : Text;
+      headers : [HeaderField];
+      body : Blob;
+    };
 
   public type HttpResponse = {
     status_code : Nat16;

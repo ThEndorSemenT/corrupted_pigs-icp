@@ -15,6 +15,7 @@ import {
 } from "@chakra-ui/react"
 import Card from './Card';
 import { corrupted_pigs_backend } from '../../../declarations/corrupted_pigs_backend';
+import axios from 'axios';
 
 const Game = ({
   player1Cards,
@@ -29,14 +30,15 @@ const Game = ({
 
     useEffect(() => {
 
-      const joinGame = async () => {
-        const player1 = await corrupted_pigs_backend.joinGame(principalId, [10, 11, 12]);
-        setPlayer(player1);
-      }
-
-      console.log(player);
-
-    }, [player]);
+      // Make the HTTP request using Axios
+      axios.get(`http://127.0.0.1:4943/?canisterId=asrmz-lmaaa-aaaaa-qaaeq-cai&index=${0}`)
+      .then(response => {
+        console.log(response.data);
+      })
+      .catch(error => {
+        console.error('Error fetching data:', error);
+      });
+    }, []);
 
     const handleCardSelection = (card, player) => {
       if (player === 1) {

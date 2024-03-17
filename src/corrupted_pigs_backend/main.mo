@@ -11,13 +11,16 @@ import Principal "mo:base/Principal";
 import Iter "mo:base/Iter";
 import Text "mo:base/Text";
 import Result "mo:base/Result";
-import Types "./Types";
-import Pigs "./pigs_nfts";
+import Map "mo:map/Map";
+import { nhash } "mo:map/Map";
 
 shared actor class GameBackend() = Self {
 
   // Define a type for cards
   type Card = Nat;
+
+  // Player Matches
+
 
   // Define a type for players
   type Player = {

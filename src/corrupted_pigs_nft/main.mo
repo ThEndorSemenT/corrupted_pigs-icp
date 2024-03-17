@@ -173,16 +173,15 @@ shared actor class Dip721NFT(custodian: Principal, init : Types.Dip721NonFungibl
   };
 
   public query func http_request(request : Types.HttpRequest) : async Types.HttpResponse {
-    // let width : Text = "500";
-    // let height : Text = "500";
-    let ctype = "text/html";
-    // let ctype2 = "text/svg";
-    let path = Iter.toArray(Text.tokens(request.url, #text("/")));
+    
+    let ctype = "image/png";
+    //let path = Iter.toArray(Text.tokens(request.url, #text("/")));
+    let base64Image = Pigs.getNFT(1); // Assuming Pigs.getNFT(0) returns image data
 
     return {
       status_code = 200;
       headers = [("content-type", ctype),("cache-control", "public, max-age=15552000")];
-      body = Text.encodeUtf8("<img src=\"data:image/png;base64 ," # Pigs.getNFT(0) # "\" alt=\"Red dot\" />");
+      body = Text.encodeUtf8(base64Image);
       streaming_strategy = null;
     };
 
